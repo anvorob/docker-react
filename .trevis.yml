@@ -8,3 +8,16 @@ before_install:
 
 script:
   - docker run -e CI=true anvorob/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker" #name of the app in AWS EBS
+  env: "Docker-env" #environment name in AWS EBS
+  bucket_name: "elasticbeanstalk-us-east-1-470900282255" #S3 bucket name
+  bucket_path: "docker" #same as app name
+  on:
+    branch:master
+  access_key_id: $AWS_ACCESS_KEY #AWS user access key
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY" #AWS user secret key
